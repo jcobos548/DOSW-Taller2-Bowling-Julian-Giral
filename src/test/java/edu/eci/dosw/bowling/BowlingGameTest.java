@@ -108,4 +108,16 @@ class BowlingGameTest {
                 game::score
         );
     }
+
+    @Test
+    void tenNormalFrames_gameIsComplete() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 10; i++) {
+            game.roll(0);
+            game.roll(0);
+        }
+
+        assertTrue(game.isComplete());
+    }
 }
