@@ -14,7 +14,9 @@ public class BowlingGame {
     }
 
     public void roll(int pins) {
-        // TODO: implementar con TDD
+        Frame frame = new Frame();
+        frame.addRoll(pins);
+        frames.add(frame);
     }
 
     public int score() {
