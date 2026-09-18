@@ -23,5 +23,15 @@ class BowlingGameTest {
                 () -> game.roll(-1)
         );
     }
+
+    @Test
+    void rollMoreThanTenPins_throwsException() {
+        BowlingGame game = new BowlingGame();
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> game.roll(11)
+        );
+    }
 }
 
