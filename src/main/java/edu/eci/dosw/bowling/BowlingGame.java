@@ -18,9 +18,31 @@ public class BowlingGame {
             throw new IllegalArgumentException("Los pinos deben estar entre 0 y 10");
         }
 
-        Frame frame = new Frame();
-        frame.addRoll(pins);
-        frames.add(frame);
+        if (frames.isEmpty()) {
+            Frame frame = new Frame();
+            frame.addRoll(pins);
+            frames.add(frame);
+            return;
+        }
+
+        Frame frame = frames.get(currentFrame);
+
+        if (frame.getRolls().size() == 1) {
+            int firstRoll = frame.getRolls().get(0);
+
+            if (firstRoll + pins > 10) {
+                throw new IllegalArgumentException(
+                        "Los pinos del frame no pueden superar 10"
+                );
+            }
+
+            frame.addRoll(pins);
+        } else {
+            Frame newFrame = new Frame();
+            newFrame.addRoll(pins);
+            frames.add(newFrame);
+            currentFrame++;
+        }
     }
 
     public int score() {
