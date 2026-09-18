@@ -109,5 +109,19 @@ class BowlingGameTest {
 
         assertEquals(0, game.score());
     }
+
+    @Test
+    void normalRolls_scoreIsSumOfPins() {
+        BowlingGame game = new BowlingGame();
+
+        game.roll(3);
+        game.roll(4);
+        game.roll(2);
+        game.roll(5);
+        game.roll(6);
+        game.roll(1);
+
+        assertEquals(21, game.score());
+    }
 }
 
