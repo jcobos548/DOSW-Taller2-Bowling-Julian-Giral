@@ -123,5 +123,16 @@ class BowlingGameTest {
 
         assertEquals(21, game.score());
     }
+
+    @Test
+    void spare_scoresTenPlusNextRoll() {
+        BowlingGame game = new BowlingGame();
+
+        game.roll(5);
+        game.roll(5);
+        game.roll(3);
+
+        assertEquals(13, game.score());
+    }
 }
 
