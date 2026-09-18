@@ -14,54 +14,63 @@ public class BowlingGame {
     }
 
     public void roll(int pins) {
+        validatePins(pins);
+
+        if (frames.isEmpty()) {
+            createFirstFrame(pins);
+            return;
+        }
+
+        if (currentFrame >= 10) {
+            addBonusRoll(pins);
+            return;
+        }
+
+        Frame frame = getCurrentFrame();
+
+        if (frame.getRolls().isEmpty()) {
+            addFirstRoll(frame, pins);
+            return;
+        }
+
+        addSecondRoll(frame, pins);
+    }
+
+    private void validatePins(int pins) {
         if (pins < 0 || pins > 10) {
             throw new IllegalArgumentException(
                     "Los pinos deben estar entre 0 y 10"
             );
         }
+    }
 
-        if (frames.isEmpty()) {
-            Frame frame = new Frame();
-            frame.addRoll(pins);
-            frames.add(frame);
+    private void createFirstFrame(int pins) {
+        Frame frame = new Frame();
+        frame.addRoll(pins);
+        frames.add(frame);
 
-            if (pins == 10) {
-                currentFrame++;
-            }
-
-            return;
+        if (pins == 10) {
+            currentFrame++;
         }
+    }
 
-        if (currentFrame >= 10) {
-            Frame tenthFrame = frames.get(9);
-
-            if (!hasBonusRolls(tenthFrame)
-                    || tenthFrame.getRolls().size() >= 3) {
-                throw new IllegalStateException(
-                        "El juego ya terminó"
-                );
-            }
-
-            tenthFrame.addRoll(pins);
-            return;
-        }
-
+    private Frame getCurrentFrame() {
         if (frames.size() <= currentFrame) {
             frames.add(new Frame());
         }
 
-        Frame frame = frames.get(currentFrame);
+        return frames.get(currentFrame);
+    }
 
-        if (frame.getRolls().isEmpty()) {
-            frame.addRoll(pins);
+    private void addFirstRoll(Frame frame, int pins) {
+        frame.addRoll(pins);
 
-            if (pins == 10) {
-                currentFrame++;
-            }
-
-            return;
+        if (pins == 10) {
+            currentFrame++;
         }
+    }
 
+    private void addSecondRoll(Frame frame, int pins) {
         int firstRoll = frame.getRolls().get(0);
 
         if (firstRoll + pins > 10) {
@@ -72,6 +81,19 @@ public class BowlingGame {
 
         frame.addRoll(pins);
         currentFrame++;
+    }
+
+    private void addBonusRoll(int pins) {
+        Frame tenthFrame = frames.get(9);
+
+        if (!hasBonusRolls(tenthFrame)
+                || tenthFrame.getRolls().size() >= 3) {
+            throw new IllegalStateException(
+                    "El juego ya terminó"
+            );
+        }
+
+        tenthFrame.addRoll(pins);
     }
 
     private boolean hasBonusRolls(Frame frame) {
