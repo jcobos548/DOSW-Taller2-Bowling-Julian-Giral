@@ -98,5 +98,16 @@ class BowlingGameTest {
 
         assertEquals(3, game.getFrames().get(9).getRolls().size());
     }
+
+    @Test
+    void allZeroRolls_scoreIsZero() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 20; i++) {
+            game.roll(0);
+        }
+
+        assertEquals(0, game.score());
+    }
 }
 
