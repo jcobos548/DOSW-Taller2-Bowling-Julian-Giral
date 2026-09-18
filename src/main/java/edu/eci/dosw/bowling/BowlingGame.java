@@ -15,7 +15,9 @@ public class BowlingGame {
 
     public void roll(int pins) {
         if (pins < 0 || pins > 10) {
-            throw new IllegalArgumentException("Los pinos deben estar entre 0 y 10");
+            throw new IllegalArgumentException(
+                    "Los pinos deben estar entre 0 y 10"
+            );
         }
 
         if (frames.isEmpty()) {
@@ -37,12 +39,20 @@ public class BowlingGame {
             }
 
             frame.addRoll(pins);
-        } else {
-            Frame newFrame = new Frame();
-            newFrame.addRoll(pins);
-            frames.add(newFrame);
-            currentFrame++;
+            return;
         }
+
+        if (currentFrame == 9) {
+            throw new IllegalStateException(
+                    "El juego ya terminó"
+            );
+        }
+
+        currentFrame++;
+
+        Frame newFrame = new Frame();
+        newFrame.addRoll(pins);
+        frames.add(newFrame);
     }
 
     public int score() {
