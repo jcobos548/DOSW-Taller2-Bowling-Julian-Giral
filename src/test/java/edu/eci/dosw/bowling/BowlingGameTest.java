@@ -148,4 +148,20 @@ class BowlingGameTest {
 
         assertTrue(game.isComplete());
     }
+
+    @Test
+    void tenthFrameStrikeWithTwoBonuses_gameIsComplete() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 9; i++) {
+            game.roll(0);
+            game.roll(0);
+        }
+
+        game.roll(10);
+        game.roll(5);
+        game.roll(3);
+
+        assertTrue(game.isComplete());
+    }
 }
