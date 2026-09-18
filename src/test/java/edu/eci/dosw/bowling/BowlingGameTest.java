@@ -59,5 +59,15 @@ class BowlingGameTest {
                 () -> game.roll(0)
         );
     }
+
+    @Test
+    void rollTenPins_marksFrameAsStrikeAndAdvances() {
+        BowlingGame game = new BowlingGame();
+
+        game.roll(10);
+
+        assertEquals(FrameType.STRIKE, game.getFrames().get(0).getType());
+        assertEquals(1, game.getFrames().size());
+    }
 }
 
