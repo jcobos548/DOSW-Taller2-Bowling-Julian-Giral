@@ -164,4 +164,15 @@ class BowlingGameTest {
 
         assertTrue(game.isComplete());
     }
+
+    @Test
+    void perfectGame_gameIsComplete() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 12; i++) {
+            game.roll(10);
+        }
+
+        assertTrue(game.isComplete());
+    }
 }
