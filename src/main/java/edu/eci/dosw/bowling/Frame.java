@@ -15,12 +15,23 @@ public class Frame {
 
     public void addRoll(int pins) {
         rolls.add(pins);
+        updateType();
+    }
 
-        if (rolls.size() == 1 && pins == 10) {
+    private void updateType() {
+        if (isStrike()) {
             type = FrameType.STRIKE;
-        } else if (rolls.size() == 2 && rolls.get(0) + rolls.get(1) == 10) {
+        } else if (isSpare()) {
             type = FrameType.SPARE;
         }
+    }
+
+    private boolean isStrike() {
+        return rolls.size() == 1 && rolls.get(0) == 10;
+    }
+
+    private boolean isSpare() {
+        return rolls.size() == 2 && rolls.get(0) + rolls.get(1) == 10;
     }
 
     public List<Integer> getRolls() {
