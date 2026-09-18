@@ -10,7 +10,9 @@ public class BowlingScorer {
         for (int i = 0; i < frames.size() && i < 10; i++) {
             Frame frame = frames.get(i);
 
-            if (frame.getType() == FrameType.STRIKE) {
+            if (i == 9) {
+                total += sumRolls(frame);
+            } else if (frame.getType() == FrameType.STRIKE) {
                 total += 10;
                 total += getNextRoll(frames, i);
                 total += getSecondNextRoll(frames, i);
