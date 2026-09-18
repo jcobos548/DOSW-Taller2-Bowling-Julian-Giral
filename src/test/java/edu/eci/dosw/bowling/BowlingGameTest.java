@@ -120,4 +120,16 @@ class BowlingGameTest {
 
         assertTrue(game.isComplete());
     }
+
+    @Test
+    void nineFrames_gameIsNotComplete() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 9; i++) {
+            game.roll(0);
+            game.roll(0);
+        }
+
+        assertFalse(game.isComplete());
+    }
 }
