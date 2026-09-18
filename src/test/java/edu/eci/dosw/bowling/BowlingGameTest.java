@@ -145,5 +145,16 @@ class BowlingGameTest {
 
         assertEquals(17, game.score());
     }
+
+    @Test
+    void twoStrikesAndFive_scoresCorrectly() {
+        BowlingGame game = new BowlingGame();
+
+        game.roll(10);
+        game.roll(10);
+        game.roll(5);
+
+        assertEquals(45, game.score());
+    }
 }
 
