@@ -102,8 +102,15 @@ public class BowlingGame {
     }
 
     public int score() {
-        // TODO: implementar con TDD
-        return 0;
+        int total = 0;
+
+        for (Frame frame : frames) {
+            for (int pins : frame.getRolls()) {
+                total += pins;
+            }
+        }
+
+        return total;
     }
 
     public boolean isComplete() {
