@@ -20,10 +20,30 @@ public class BowlingGame {
             );
         }
 
+        if (frames.isEmpty()) {
+            Frame frame = new Frame();
+            frame.addRoll(pins);
+            frames.add(frame);
+
+            if (pins == 10) {
+                currentFrame++;
+            }
+
+            return;
+        }
+
         if (currentFrame >= 10) {
-            throw new IllegalStateException(
-                    "El juego ya terminó"
-            );
+            Frame tenthFrame = frames.get(9);
+
+            if (!hasBonusRolls(tenthFrame)
+                    || tenthFrame.getRolls().size() >= 3) {
+                throw new IllegalStateException(
+                        "El juego ya terminó"
+                );
+            }
+
+            tenthFrame.addRoll(pins);
+            return;
         }
 
         if (frames.size() <= currentFrame) {
@@ -52,6 +72,11 @@ public class BowlingGame {
 
         frame.addRoll(pins);
         currentFrame++;
+    }
+
+    private boolean hasBonusRolls(Frame frame) {
+        return frame.getType() == FrameType.STRIKE
+                || frame.getType() == FrameType.SPARE;
     }
 
     public int score() {
