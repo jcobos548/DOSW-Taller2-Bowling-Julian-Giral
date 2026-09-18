@@ -45,5 +45,19 @@ class BowlingGameTest {
                 () -> game.roll(6)
         );
     }
+
+    @Test
+    void rollAfterGameIsComplete_throwsException() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 20; i++) {
+            game.roll(0);
+        }
+
+        assertThrows(
+                IllegalStateException.class,
+                () -> game.roll(0)
+        );
+    }
 }
 
