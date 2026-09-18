@@ -124,4 +124,25 @@ class BowlingScorerTest {
 
         assertEquals(150, scorer.calculate(frames));
     }
+
+    @Test
+    void perfectGame_scoreIs300() {
+        List<Frame> frames = new ArrayList<>();
+
+        for (int i = 0; i < 9; i++) {
+            Frame frame = new Frame();
+            frame.addRoll(10);
+            frames.add(frame);
+        }
+
+        Frame tenthFrame = new Frame();
+        tenthFrame.addRoll(10);
+        tenthFrame.addRoll(10);
+        tenthFrame.addRoll(10);
+        frames.add(tenthFrame);
+
+        BowlingScorer scorer = new BowlingScorer();
+
+        assertEquals(300, scorer.calculate(frames));
+    }
 }
