@@ -98,4 +98,14 @@ class BowlingGameTest {
 
         assertEquals(3, game.getFrames().get(9).getRolls().size());
     }
+
+    @Test
+    void scoreBeforeGameIsComplete_throwsException() {
+        BowlingGame game = new BowlingGame();
+
+        assertThrows(
+                IllegalStateException.class,
+                game::score
+        );
+    }
 }
