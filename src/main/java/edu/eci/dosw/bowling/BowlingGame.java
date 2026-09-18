@@ -7,21 +7,27 @@ public class BowlingGame {
 
     private final List<Frame> frames;
     private int currentFrame;
+    private final BowlingScorer scorer;
 
     public BowlingGame() {
         this.frames = new ArrayList<>();
         this.currentFrame = 0;
+        this.scorer = new BowlingScorer();
     }
 
     public void roll(int pins) {
         validatePins(pins);
+
+        if (isComplete()) {
+            throw new IllegalStateException("El juego ya termino");
+        }
 
         if (frames.isEmpty()) {
             createFirstFrame(pins);
             return;
         }
 
-        if (currentFrame >= 10) {
+        if (currentFrame == 10) {
             addBonusRoll(pins);
             return;
         }
@@ -30,10 +36,9 @@ public class BowlingGame {
 
         if (frame.getRolls().isEmpty()) {
             addFirstRoll(frame, pins);
-            return;
+        } else {
+            addSecondRoll(frame, pins);
         }
-
-        addSecondRoll(frame, pins);
     }
 
     private void validatePins(int pins) {
@@ -86,36 +91,50 @@ public class BowlingGame {
     private void addBonusRoll(int pins) {
         Frame tenthFrame = frames.get(9);
 
-        if (!hasBonusRolls(tenthFrame)
-                || tenthFrame.getRolls().size() >= 3) {
-            throw new IllegalStateException(
-                    "El juego ya terminó"
-            );
+        if (tenthFrame.getType() == FrameType.STRIKE) {
+            if (tenthFrame.getRolls().size() >= 3) {
+                throw new IllegalStateException("El juego ya termino");
+            }
+
+            tenthFrame.addRoll(pins);
+            return;
         }
 
-        tenthFrame.addRoll(pins);
-    }
+        if (tenthFrame.getType() == FrameType.SPARE) {
+            if (tenthFrame.getRolls().size() >= 3) {
+                throw new IllegalStateException("El juego ya termino");
+            }
 
-    private boolean hasBonusRolls(Frame frame) {
-        return frame.getType() == FrameType.STRIKE
-                || frame.getType() == FrameType.SPARE;
+            tenthFrame.addRoll(pins);
+        }
     }
 
     public int score() {
-        int total = 0;
-
-        for (Frame frame : frames) {
-            for (int pins : frame.getRolls()) {
-                total += pins;
-            }
+        if (!isComplete()) {
+            throw new IllegalStateException(
+                    "El juego no ha terminado"
+            );
         }
 
-        return total;
+        return scorer.calculate(frames);
     }
 
     public boolean isComplete() {
-        // TODO: implementar con TDD
-        return false;
+        if (frames.size() < 10) {
+            return false;
+        }
+
+        Frame tenthFrame = frames.get(9);
+
+        if (tenthFrame.getType() == FrameType.STRIKE) {
+            return tenthFrame.getRolls().size() == 3;
+        }
+
+        if (tenthFrame.getType() == FrameType.SPARE) {
+            return tenthFrame.getRolls().size() == 3;
+        }
+
+        return tenthFrame.getRolls().size() == 2;
     }
 
     public List<Frame> getFrames() {
