@@ -16,8 +16,10 @@ public class Frame {
     public void addRoll(int pins) {
         rolls.add(pins);
 
-        if (pins == 10 && rolls.size() == 1) {
+        if (rolls.size() == 1 && pins == 10) {
             type = FrameType.STRIKE;
+        } else if (rolls.size() == 2 && rolls.get(0) + rolls.get(1) == 10) {
+            type = FrameType.SPARE;
         }
     }
 
