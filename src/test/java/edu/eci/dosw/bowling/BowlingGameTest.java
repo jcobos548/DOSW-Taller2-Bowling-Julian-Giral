@@ -82,5 +82,21 @@ class BowlingGameTest {
                 game.getFrames().get(0).getType()
         );
     }
+
+    @Test
+    void tenthFrameStrike_allowsThreeRolls() {
+        BowlingGame game = new BowlingGame();
+
+        for (int i = 0; i < 9; i++) {
+            game.roll(0);
+            game.roll(0);
+        }
+
+        game.roll(10);
+        game.roll(5);
+        game.roll(3);
+
+        assertEquals(3, game.getFrames().get(9).getRolls().size());
+    }
 }
 
