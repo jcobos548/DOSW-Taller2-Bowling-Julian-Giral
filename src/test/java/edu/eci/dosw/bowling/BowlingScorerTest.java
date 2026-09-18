@@ -102,4 +102,26 @@ class BowlingScorerTest {
 
         return frames;
     }
+
+    @Test
+    void allSparesAndLastFive_scoreIs150() {
+        List<Frame> frames = new ArrayList<>();
+
+        for (int i = 0; i < 9; i++) {
+            Frame frame = new Frame();
+            frame.addRoll(5);
+            frame.addRoll(5);
+            frames.add(frame);
+        }
+
+        Frame tenthFrame = new Frame();
+        tenthFrame.addRoll(5);
+        tenthFrame.addRoll(5);
+        tenthFrame.addRoll(5);
+        frames.add(tenthFrame);
+
+        BowlingScorer scorer = new BowlingScorer();
+
+        assertEquals(150, scorer.calculate(frames));
+    }
 }
