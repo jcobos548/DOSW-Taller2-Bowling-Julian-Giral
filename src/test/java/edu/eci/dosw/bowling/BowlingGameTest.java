@@ -69,5 +69,18 @@ class BowlingGameTest {
         assertEquals(FrameType.STRIKE, game.getFrames().get(0).getType());
         assertEquals(1, game.getFrames().size());
     }
+
+    @Test
+    void twoRollsOfFive_marksFrameAsSpare() {
+        BowlingGame game = new BowlingGame();
+
+        game.roll(5);
+        game.roll(5);
+
+        assertEquals(
+                FrameType.SPARE,
+                game.getFrames().get(0).getType()
+        );
+    }
 }
 
